@@ -105,7 +105,6 @@ export default function AdminPage() {
     ? { primary: business.theme_primary, accent: business.theme_accent, soft: business.theme_soft }
     : palettes[0];
 
-  // Todavía no creó su negocio
   if (!business) {
     return (
       <div style={{ minHeight: "100vh", background: "#FBF7F0", display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
@@ -227,4 +226,10 @@ export default function AdminPage() {
               <button onClick={() => removeProduct(p.id)} style={{ background: "none", border: "none", color: "#B3564A", cursor: "pointer" }}>
                 borrar
               </button>
-            
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
