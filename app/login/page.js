@@ -3,7 +3,7 @@ import { useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 
 export default function LoginPage() {
-  const [mode, setMode] = useState("signup"); // "signup" | "login"
+  const [mode, setMode] = useState("signup");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -12,14 +12,19 @@ export default function LoginPage() {
   const submit = async () => {
     setError("");
     setLoading(true);
-    const fn = mode === "signup" ? supabase.auth.signUp : supabase.auth.signInWithPassword;
-    const { error } = await fn({ email, password });
-    setLoading(false);
-    if (error) {
-      setError(error.message);
-      return;
+    try {
+      const fn = mode === "signup" ? supabase.auth.signUp : supabase.auth.signInWithPassword;
+      const { error } = await fn({ email, password });
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
+      window.location.href = "/admin";
+    } catch (err) {
+      setError("Error de conexión: " + (err && err.message ? err.message : String(err)));
+      setLoading(false);
     }
-    window.location.href = "/admin";
   };
 
   return (
